@@ -14,9 +14,12 @@ const intervalo$ = new Observable<number>(subs => {
 
         subs.next( Math.random() );
 
-    }, 3000);
+    }, 1000);
 
-    return () => clearInterval(intervalId);
+    return () => {
+        clearInterval(intervalId);
+        console.log('intervalo destruido');
+    };
 
 });
 
@@ -26,8 +29,14 @@ const subscription = intervalo$.subscribe(subject$);
 // const subs1 = intervalo$.subscribe(rnd => console.log('subs1', rnd))
 // const subs2 = intervalo$.subscribe(rnd => console.log('subs2', rnd))
 
-const subs1 = subject$.subscribe(rnd => console.log('subs1', rnd))
-const subs2 = subject$.subscribe(rnd => console.log('subs2', rnd))                                                                           
+// const subs1 = subject$.subscribe(rnd => console.log('subs1', rnd))
+// const subs2 = subject$.subscribe(rnd => console.log('subs2', rnd)) 
+
+const subs1 = subject$.subscribe(observer);
+const subs2 = subject$.subscribe(observer);
+
+
+
 
 setTimeout( () => {
     subject$.next(10);
